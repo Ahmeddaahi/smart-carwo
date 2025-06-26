@@ -1,21 +1,15 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ShoppingBag, Award, Truck } from 'lucide-react';
+import { supabase } from '../integrations/supabase/client';
+import type { Database } from '../integrations/supabase/types';
 
 const Home = () => {
   const [language] = useState<'en' | 'so'>('en');
   const [customerCount, setCustomerCount] = useState(0);
   const [isCounterVisible, setIsCounterVisible] = useState(false);
-
-  const categories = [
-    { name: 'Khamiis', nameEn: 'Khamiis', nameSo: 'Khamiis', image: 'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80' },
-    { name: 'Suits', nameEn: 'Suits', nameSo: 'Suudhyo', image: 'https://images.unsplash.com/photo-1617127365659-c47fa864d8bc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80' },
-    { name: 'Macawis', nameEn: 'Macawis', nameSo: 'Macawis', image: 'https://images.unsplash.com/photo-1506629905707-50d7279eb7e6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80' },
-    { name: 'Sandals', nameEn: 'Sandals', nameSo: 'Kabooyin', image: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80' },
-    { name: 'Cadaro', nameEn: 'Cadaro', nameSo: 'Cadaro', image: 'https://images.unsplash.com/photo-1544967882-6abaa5b2b007?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80' },
-    { name: 'Jackets', nameEn: 'Jackets', nameSo: 'Jaakado', image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80' }
-  ];
+  const [categories, setCategories] = useState<Database['public']['Tables']['categories']['Row'][]>([]);
+  const [categoryImages, setCategoryImages] = useState<Record<string, string>>({});
 
   const features = [
     {
@@ -75,6 +69,30 @@ const Home = () => {
 
     return () => observer.disconnect();
   }, [isCounterVisible]);
+
+  useEffect(() => {
+    // Fetch categories and their first product image
+    const fetchCategoriesAndImages = async () => {
+      const { data: catData } = await supabase.from('categories').select('*');
+      setCategories(catData || []);
+      if (catData && catData.length > 0) {
+        // For each category, fetch the first product image
+        const images: Record<string, string> = {};
+        for (const cat of catData) {
+          const { data: prodData } = await supabase
+            .from('products')
+            .select('image')
+            .eq('category', cat.id)
+            .not('image', 'is', null)
+            .limit(1)
+            .single();
+          images[cat.id] = prodData?.image || 'https://via.placeholder.com/400x300?text=No+Image';
+        }
+        setCategoryImages(images);
+      }
+    };
+    fetchCategoriesAndImages();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -194,24 +212,23 @@ const Home = () => {
                 : "Baaro ururinta tayada sare ee dharka dhaqameedka iyo casriga ah"}
             </p>
           </div>
-          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <Link
-                key={index}
-                to="/products"
+                key={category.id}
+                to={`/products?category=${category.id}`}
                 className="carwo-card group overflow-hidden hover:scale-105 transition-all duration-300"
               >
-                <div className="aspect-[4/3] overflow-hidden">
+                <div className="aspect-[4/3] overflow-hidden bg-white flex items-center justify-center">
                   <img 
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    src={categoryImages[category.id] || 'https://via.placeholder.com/400x300?text=No+Image'}
+                    alt={language === 'en' ? category.nameen : category.nameso}
+                    className="w-full h-full object-contain object-center group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-carwo-black mb-2">
-                    {language === 'en' ? category.nameEn : category.nameSo}
+                    {language === 'en' ? category.nameen : category.nameso}
                   </h3>
                   <div className="flex items-center text-carwo-gold group-hover:translate-x-2 transition-transform duration-300">
                     <span className="font-medium">
