@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Heart, Share2, ShoppingCart } from 'lucide-react';
@@ -97,18 +96,25 @@ const ProductDetail = () => {
 
           {/* Product Details */}
           <div className="space-y-8">
-            <div>
-              <h1 className="text-4xl font-bold text-carwo-black mb-2 font-montserrat">
+            <div className="flex items-center justify-between mb-2">
+              <h1 className="text-4xl font-bold text-carwo-black font-montserrat">
                 {language === 'en' ? product.nameEn : product.nameSo}
               </h1>
-              <p className="text-3xl font-bold text-carwo-gold mb-6">
-                {product.price.toLocaleString()} ETB
-              </p>
-              
-              <p className="text-lg text-gray-700 leading-relaxed mb-8">
-                {language === 'en' ? product.descriptionEn : product.descriptionSo}
-              </p>
+              <Link
+                to="/admin/login"
+                className="carwo-btn text-base ml-4 px-4 py-2"
+                style={{ whiteSpace: 'nowrap' }}
+              >
+                {language === 'en' ? 'Edit' : 'Tafatir'}
+              </Link>
             </div>
+            <p className="text-3xl font-bold text-carwo-gold mb-6">
+              {product.price.toLocaleString()} ETB
+            </p>
+            
+            <p className="text-lg text-gray-700 leading-relaxed mb-8">
+              {language === 'en' ? product.descriptionEn : product.descriptionSo}
+            </p>
 
             {/* Size Selection */}
             <div>
