@@ -152,11 +152,11 @@ const Products = () => {
                     viewMode === 'list' ? 'flex gap-6' : ''
                   }`}
                 >
-                  <div className={`${viewMode === 'list' ? 'w-1/3' : 'aspect-[4/3]'} overflow-hidden`}>
+                  <div className={`${viewMode === 'list' ? 'w-1/3' : 'aspect-[4/3]'} overflow-hidden bg-white flex items-center justify-center`}>
                     <img
                       src={product.image || 'https://via.placeholder.com/300x225?text=No+Image'}
                       alt={product.nameen || product.name || ''}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="w-full h-full object-contain object-center group-hover:scale-110 transition-transform duration-500"
                     />
                   </div>
                   

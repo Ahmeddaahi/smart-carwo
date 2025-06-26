@@ -78,11 +78,11 @@ const ProductDetail = () => {
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Product Images */}
           <div className="space-y-4">
-            <div className="aspect-square overflow-hidden rounded-2xl shadow-2xl">
+            <div className="aspect-square overflow-hidden rounded-2xl shadow-2xl bg-white flex items-center justify-center">
               <img
                 src={selectedImage || 'https://via.placeholder.com/400x400?text=No+Image'}
                 alt={product.nameen}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain object-center"
               />
             </div>
             
@@ -224,7 +224,7 @@ const ProductDetail = () => {
                 {language === 'en' ? 'Material & Care' : 'Qalabka & Daryeelka'}
               </h3>
               <p className="text-gray-700 mb-3">
-                <strong>{language === 'en' ? 'Material:' : 'Qalabka:'}</strong> {product.material || '-'}
+                <strong>{language === 'en' ? 'Material:' : 'Qalabka:'}</strong> -
               </p>
               {/* No care instructions in DB, so static text */}
               <p className="text-gray-700">
