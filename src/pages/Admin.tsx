@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../integrations/supabase/client';
 import { Database } from '../integrations/supabase/types';
+import type { TablesInsert } from '../integrations/supabase/types';
 
 type Category = Database['public']['Tables']['categories']['Row'];
 type Product = Database['public']['Tables']['products']['Row'];
 
 const Admin = () => {
+  const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -20,12 +23,35 @@ const Admin = () => {
   // Category form state
   const [categoryForm, setCategoryForm] = useState<Partial<Category>>({});
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageUploadProgress, setImageUploadProgress] = useState<number | null>(null);
+  const [imageUploadError, setImageUploadError] = useState<string | null>(null);
+  const [imageUploadSuccess, setImageUploadSuccess] = useState<boolean>(false);
 
   // Fetch categories and products
   useEffect(() => {
     fetchCategories();
     fetchProducts();
   }, []);
+
+  // Auth protection
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (!data?.session) {
+        navigate('/admin/login', { replace: true });
+      }
+    };
+    checkSession();
+    // Optionally, listen for auth changes and redirect if logged out
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session) {
+        navigate('/admin/login', { replace: true });
+      }
+    });
+    return () => {
+      listener?.subscription.unsubscribe();
+    };
+  }, [navigate]);
 
   async function fetchCategories() {
     setLoading(true);
@@ -68,6 +94,8 @@ const Admin = () => {
     setProductForm({});
     setShowProductForm(true);
     setImageFile(null);
+    // Debug log
+    console.log('Add Product clicked, showProductForm:', true);
   }
   function handleAddCategory() {
     setEditingCategory(null);
@@ -89,40 +117,62 @@ const Admin = () => {
     }
   }
 
-  async function uploadImage(file: File): Promise<string | null> {
+  // New: handle image upload immediately on file select
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setImageUploadError(null);
+    setImageUploadSuccess(false);
+    setImageUploadProgress(null);
+    if (!file) return;
+    setImageFile(file);
+    // Check auth session
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      setImageUploadError('You must be logged in to upload images.');
+      return;
+    }
+    // Upload to Supabase Storage
     const fileExt = file.name.split('.').pop();
-    const fileName = `${Math.random()}.${fileExt}`;
-    const filePath = `product-images/${fileName}`;
-
+    const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${fileExt}`;
+    const filePath = `products/${fileName}`;
+    setImageUploadProgress(0);
+    // Supabase JS SDK does not support progress natively, so we show loading
     const { error: uploadError } = await supabase.storage
       .from('product-images')
-      .upload(filePath, file);
-
+      .upload(filePath, file, { upsert: true });
     if (uploadError) {
-      setError(uploadError.message);
-      return null;
+      setImageUploadError(uploadError.message);
+      setImageUploadProgress(null);
+      return;
     }
-
-    const { data } = supabase.storage.from('product-images').getPublicUrl(filePath);
-    return data.publicUrl;
-  }
+    // Get public URL
+    const { data: urlData } = supabase.storage.from('product-images').getPublicUrl(filePath);
+    if (urlData?.publicUrl) {
+      setProductForm(f => ({ ...f, image: urlData.publicUrl }));
+      setImageUploadSuccess(true);
+      setImageUploadProgress(100);
+    } else {
+      setImageUploadError('Failed to get image URL.');
+      setImageUploadProgress(null);
+    }
+  };
 
   async function handleProductFormSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
-    let imageUrl = editingProduct?.image || '';
+    let imageUrl = productForm.image || editingProduct?.image || '';
 
-    if (imageFile) {
-      const uploadedUrl = await uploadImage(imageFile);
-      if (uploadedUrl) {
-        imageUrl = uploadedUrl;
-      } else {
-        setLoading(false);
-        return; // Stop if image upload fails
-      }
-    }
+    // No need to call uploadImage here; image is already uploaded and URL is set
 
-    const productData = { ...productForm, image: imageUrl };
+    // Ensure category is null if not selected
+    const categoryValue = productForm.category === '' ? null : productForm.category;
+
+    // Use Insert type for product
+    const productData: TablesInsert<'products'> = {
+      ...productForm,
+      image: imageUrl,
+      category: categoryValue,
+    } as TablesInsert<'products'>;
 
     if (editingProduct) {
       // Update
@@ -130,7 +180,12 @@ const Admin = () => {
         .from('products')
         .update(productData)
         .eq('id', editingProduct.id);
-      if (error) setError(error.message);
+      if (error) {
+        setError(error.message);
+        console.error('Product update error:', error);
+        setLoading(false);
+        return;
+      }
     } else {
       // Insert
       if (!productData.name || !productData.nameen || !productData.nameso || !productData.price) {
@@ -138,8 +193,13 @@ const Admin = () => {
         setLoading(false);
         return;
       }
-      const { error } = await supabase.from('products').insert(productData as Product);
-      if (error) setError(error.message);
+      const { error } = await supabase.from('products').insert(productData);
+      if (error) {
+        setError(error.message);
+        console.error('Product insert error:', error);
+        setLoading(false);
+        return;
+      }
     }
     setShowProductForm(false);
     fetchProducts();
@@ -168,9 +228,23 @@ const Admin = () => {
     fetchCategories();
   }
 
+  // Add this handler for logout
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate('/admin/login', { replace: true });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
       <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-end mb-4">
+          <button
+            onClick={handleLogout}
+            className="px-4 py-2 rounded bg-red-500 text-white font-bold hover:bg-red-600 transition"
+          >
+            Logout
+          </button>
+        </div>
         <h1 className="text-4xl font-bold mb-6 text-carwo-gold">Admin Panel</h1>
         <div className="flex flex-col md:flex-row gap-8">
           {/* Categories */}
@@ -230,9 +304,18 @@ const Admin = () => {
               </select>
               <input type="number" placeholder="Price" value={productForm.price || ''} onChange={e => setProductForm(f => ({ ...f, price: Number(e.target.value) }))} className="mb-2 w-full border p-2 rounded" required />
               <label className="block mb-2 text-sm font-medium">Product Image</label>
-              <input type="file" onChange={e => e.target.files && setImageFile(e.target.files[0])} className="mb-2 w-full border p-2 rounded" accept="image/*" />
-              {productForm.image && !imageFile && <img src={productForm.image} alt="Current" className="w-24 h-24 object-cover my-2"/>}
-
+              <input type="file" accept="image/*" onChange={handleImageChange} className="mb-2 w-full border p-2 rounded" />
+              {/* Preview and upload status */}
+              {productForm.image && (
+                <img src={productForm.image} alt="Preview" className="w-24 h-24 object-cover my-2 rounded" />
+              )}
+              {imageUploadProgress !== null && (
+                <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                  <div className="bg-carwo-gold h-2 rounded-full" style={{ width: `${imageUploadProgress}%` }}></div>
+                </div>
+              )}
+              {imageUploadSuccess && <div className="text-green-600 mb-2 text-sm">Image uploaded!</div>}
+              {imageUploadError && <div className="text-red-600 mb-2 text-sm">{imageUploadError}</div>}
               <textarea placeholder="Description" value={productForm.description || ''} onChange={e => setProductForm(f => ({ ...f, description: e.target.value }))} className="mb-2 w-full border p-2 rounded" />
               <textarea placeholder="Description (EN)" value={productForm.descriptionen || ''} onChange={e => setProductForm(f => ({ ...f, descriptionen: e.target.value }))} className="mb-2 w-full border p-2 rounded" required />
               <textarea placeholder="Description (SO)" value={productForm.descriptionso || ''} onChange={e => setProductForm(f => ({ ...f, descriptionso: e.target.value }))} className="mb-2 w-full border p-2 rounded" required />
