@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Heart, Share2, ShoppingCart } from 'lucide-react';
+import { supabase } from '../integrations/supabase/client';
+import type { Database } from '../integrations/supabase/types';
 
 const ProductDetail = () => {
   const { productId } = useParams();
@@ -8,44 +10,54 @@ const ProductDetail = () => {
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [product, setProduct] = useState<Database['public']['Tables']['products']['Row'] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  // Mock product data - in real app, this would come from API/database
-  const products = [
-    {
-      id: 1,
-      name: 'Premium Khamiis',
-      nameEn: 'Premium Khamiis',
-      nameSo: 'Khamiis Tayada Sare',
-      category: 'khamiis',
-      price: 2500,
-      images: [
-        'https://images.unsplash.com/photo-1594938298603-c8148c4dae35?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1583743814966-8936f37cd2b1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        'https://images.unsplash.com/photo-1576995853123-5a10305d93c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
-      ],
-      descriptionEn: 'Elegant traditional Khamiis with intricate embroidery and premium cotton fabric. Perfect for special occasions and daily wear. This piece represents the finest craftsmanship with attention to detail that makes it a standout choice for those who appreciate authentic traditional fashion.',
-      descriptionSo: 'Khamiis dhaqameed oo qurux badan oo leh dhar-tolinta ee faahfaahin ah iyo dhar-cadka tayada sare. Ku haboon munaasabado gaar ah iyo xubnaha maalinlaha ah. Qaybtani waxay matelaysaa farsamada ugu fiican ee leh fiiro gaar ah oo ka dhigaysa doorasho gaar ah kuwa qaddarinaya moodada dhaqameedka dhabta ah.',
-      material: 'Premium Cotton',
-      sizes: ['S', 'M', 'L', 'XL', 'XXL'],
-      colors: ['White', 'Cream', 'Light Blue'],
-      features: [
-        { en: 'Hand-embroidered details', so: 'Faahfaahin gacan lagu tollay' },
-        { en: 'Premium cotton fabric', so: 'Dhar-cadka tayada sare' },
-        { en: 'Traditional cut and design', so: 'Gooyga dhaqameedka iyo naqshadeynta' },
-        { en: 'Comfortable fit', so: 'Ku-habboon raaxo leh' },
-        { en: 'Machine washable', so: 'Lagu maydhi karo mashiinka' }
-      ]
-    }
-  ];
-
-  const product = products.find(p => p.id === parseInt(productId || '1')) || products[0];
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      setLoading(true);
+      setError(null);
+      if (!productId) {
+        setError('No product ID provided.');
+        setLoading(false);
+        return;
+      }
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .eq('id', productId)
+        .single();
+      if (error || !data) {
+        setError('Product not found.');
+        setProduct(null);
+      } else {
+        setProduct(data);
+        setSelectedImage(data.image || null);
+      }
+      setLoading(false);
+    };
+    fetchProduct();
+  }, [productId]);
 
   const handleWhatsAppOrder = () => {
-    const message = `Hello! I'm interested in ordering:\n\nProduct: ${product.nameEn}\nSize: ${selectedSize}\nQuantity: ${quantity}\nTotal: ${(product.price * quantity).toLocaleString()} ETB\n\nPlease confirm availability and delivery details.`;
+    if (!product) return;
+    const message = `Hello! I'm interested in ordering:\n\nProduct: ${product.nameen}\nSize: ${selectedSize}\nQuantity: ${quantity}\nTotal: ${(product.price * quantity).toLocaleString()} ETB\n\nPlease confirm availability and delivery details.`;
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/251995817222?text=${encodedMessage}`, '_blank');
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl text-gray-600">Loading...</div>
+    );
+  }
+  if (error || !product) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-xl text-red-600">{error || 'Product not found.'}</div>
+    );
+  }
 
   return (
     <div className="min-h-screen pt-20">
@@ -68,37 +80,39 @@ const ProductDetail = () => {
           <div className="space-y-4">
             <div className="aspect-square overflow-hidden rounded-2xl shadow-2xl">
               <img
-                src={selectedImage}
-                alt={product.nameEn}
+                src={selectedImage || 'https://via.placeholder.com/400x400?text=No+Image'}
+                alt={product.nameen}
                 className="w-full h-full object-cover"
               />
             </div>
             
-            {/* Thumbnail Images */}
+            {/* No thumbnails since only one image per product in DB, but keep logic for future */}
+            {/*
             <div className="grid grid-cols-3 gap-4">
-              {product.images.map((image, index) => (
+              {[product.image].filter(Boolean).map((image, index) => (
                 <button
                   key={index}
-                  onClick={() => setSelectedImage(image)}
+                  onClick={() => setSelectedImage(image!)}
                   className={`aspect-square overflow-hidden rounded-lg ${
                     selectedImage === image ? 'ring-4 ring-carwo-gold' : 'hover:opacity-75'
                   } transition-all duration-300`}
                 >
                   <img
-                    src={image}
-                    alt={`${product.nameEn} ${index + 1}`}
+                    src={image!}
+                    alt={`${product.nameen} ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
                 </button>
               ))}
             </div>
+            */}
           </div>
 
           {/* Product Details */}
           <div className="space-y-8">
             <div className="flex items-center justify-between mb-2">
               <h1 className="text-4xl font-bold text-carwo-black font-montserrat">
-                {language === 'en' ? product.nameEn : product.nameSo}
+                {language === 'en' ? product.nameen : product.nameso}
               </h1>
               <Link
                 to="/admin/login"
@@ -113,16 +127,17 @@ const ProductDetail = () => {
             </p>
             
             <p className="text-lg text-gray-700 leading-relaxed mb-8">
-              {language === 'en' ? product.descriptionEn : product.descriptionSo}
+              {language === 'en' ? product.descriptionen : product.descriptionso}
             </p>
 
-            {/* Size Selection */}
+            {/* Size Selection (optional, static for now) */}
+            {/*
             <div>
               <h3 className="text-lg font-semibold text-carwo-black mb-4">
                 {language === 'en' ? 'Size' : 'Cabbirka'}
               </h3>
               <div className="flex flex-wrap gap-3">
-                {product.sizes.map((size) => (
+                {['S', 'M', 'L', 'XL', 'XXL'].map((size) => (
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
@@ -137,6 +152,7 @@ const ProductDetail = () => {
                 ))}
               </div>
             </div>
+            */}
 
             {/* Quantity */}
             <div>
@@ -202,31 +218,15 @@ const ProductDetail = () => {
               </div>
             </div>
 
-            {/* Product Features */}
-            <div>
-              <h3 className="text-lg font-semibold text-carwo-black mb-4">
-                {language === 'en' ? 'Features' : 'Astaamaha'}
-              </h3>
-              <ul className="space-y-3">
-                {product.features.map((feature, index) => (
-                  <li key={index} className="flex items-start space-x-3">
-                    <div className="w-2 h-2 bg-carwo-gold rounded-full mt-2"></div>
-                    <span className="text-gray-700">
-                      {language === 'en' ? feature.en : feature.so}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
             {/* Material Info */}
             <div className="bg-carwo-light-gold/20 p-6 rounded-xl">
               <h3 className="text-lg font-semibold text-carwo-black mb-2">
                 {language === 'en' ? 'Material & Care' : 'Qalabka & Daryeelka'}
               </h3>
               <p className="text-gray-700 mb-3">
-                <strong>{language === 'en' ? 'Material:' : 'Qalabka:'}</strong> {product.material}
+                <strong>{language === 'en' ? 'Material:' : 'Qalabka:'}</strong> {product.material || '-'}
               </p>
+              {/* No care instructions in DB, so static text */}
               <p className="text-gray-700">
                 {language === 'en' 
                   ? 'Care Instructions: Machine wash cold, hang dry, iron on low heat if needed.'
