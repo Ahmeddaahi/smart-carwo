@@ -114,7 +114,7 @@ const Home = ({ language }: HomeProps) => {
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
-            <span className="text-gradient">Asc Kusoo Dhawoow Carwo Smart</span>
+            <span className="text-carwo-gold">Asc Kusoo Dhawoow Carwo Smart</span>
             <br />
             <span className="text-white"></span>
           </h1>
@@ -156,7 +156,7 @@ const Home = ({ language }: HomeProps) => {
         <div className="container mx-auto px-4 text-center">
           <div id="customer-counter" className="animate-fade-in">
             <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
-              <span className="text-gradient">{customerCount.toLocaleString()}+</span>
+              <span className="text-carwo-gold">{customerCount.toLocaleString()}+</span>
             </h2>
             <p className="text-2xl md:text-3xl">
               {language === 'en' ? 'Happy Customers' : 'Macmiil Faraxsan'}
@@ -175,7 +175,7 @@ const Home = ({ language }: HomeProps) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
-              <span className="text-gradient">{language === 'en' ? 'Featured Categories' : 'Noocyada Caanka ah'}</span>
+              <span className="text-carwo-gold">{language === 'en' ? 'Featured Categories' : 'Noocyada Caanka ah'}</span>
             </h2>
             <p className="text-xl text-gray-600">
               {language === 'en' 
@@ -219,7 +219,7 @@ const Home = ({ language }: HomeProps) => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
-              <span className="text-gradient">{language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kuu Qabanaysaa?'}</span>
+              <span className="text-carwo-gold">{language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kuu Qabanaysaa?'}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               {language === 'en' 
@@ -250,7 +250,7 @@ const Home = ({ language }: HomeProps) => {
       <section className="py-20 bg-dark-gradient text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
-            <span className="text-gradient">{language === 'en' ? 'Ready to Elevate Your Style?' : 'Diyaar u tahay in aad kor u qaaddid qaabakaaga?'}</span>
+            <span className="text-carwo-gold">{language === 'en' ? 'Ready to Elevate Your Style?' : 'Diyaar u tahay in aad kor u qaaddid qaabakaaga?'}</span>
           </h2>
           <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
             {language === 'en' 
