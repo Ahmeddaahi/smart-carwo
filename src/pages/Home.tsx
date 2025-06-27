@@ -111,14 +111,14 @@ const Home = () => {
         
         <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
-            <span className="text-gradient">Asc Kusoo Dhawoow</span>
+            <span className="text-gradient">Asc Kusoo Dhawoow Carwo Smart</span>
             <br />
-            <span className="text-white">Welcome</span>
+            <span className="text-white"></span>
           </h1>
           
           <p className="text-xl md:text-2xl mb-8 text-gray-200 animate-slide-in">
             {language === 'en' 
-              ? "Your Home for Elegant Khamiis & Traditional Fashion"
+              ? "Ku soo dhawoow Carwo Smart, halka aad ka heli karto khamiisyo, shaadhadh, surwaalo, cadaro, sacado, jaakado, suits, garamaan iyo macawisyo tayo sare leh"
               : "Gurigaaga Khamarada Quruxda badan & Dharka Dhaqameedka"}
           </p>
           
@@ -144,38 +144,6 @@ const Home = () => {
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <div className="w-6 h-10 border-2 border-carwo-gold rounded-full flex justify-center">
             <div className="w-1 h-3 bg-carwo-gold rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-carwo-black mb-4 font-montserrat">
-              {language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kaa Duwanaysaa?'}
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              {language === 'en' 
-                ? "Experience the perfect blend of traditional elegance and modern style"
-                : "La kulmo isku dhafka quruxda dhaqameedka iyo qaabka casriga ah"}
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="text-center p-6 carwo-card hover:scale-105 transition-transform duration-300">
-                <div className="flex justify-center mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-carwo-black mb-2">
-                  {language === 'en' ? feature.titleEn : feature.titleSo}
-                </h3>
-                <p className="text-gray-600">
-                  {language === 'en' ? feature.descEn : feature.descSo}
-                </p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -238,6 +206,38 @@ const Home = () => {
                   </div>
                 </div>
               </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-carwo-black mb-4 font-montserrat">
+              {language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kaa Duwanaysaa?'}
+            </h2>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              {language === 'en' 
+                ? "Experience the perfect blend of traditional elegance and modern style"
+                : "La kulmo isku dhafka quruxda dhaqameedka iyo qaabka casriga ah"}
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {features.map((feature, index) => (
+              <div key={index} className="text-center p-6 carwo-card hover:scale-105 transition-transform duration-300">
+                <div className="flex justify-center mb-4">
+                  {feature.icon}
+                </div>
+                <h3 className="text-xl font-semibold text-carwo-black mb-2">
+                  {language === 'en' ? feature.titleEn : feature.titleSo}
+                </h3>
+                <p className="text-gray-600">
+                  {language === 'en' ? feature.descEn : feature.descSo}
+                </p>
+              </div>
             ))}
           </div>
         </div>
