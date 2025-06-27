@@ -1,14 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Globe, Menu, X } from 'lucide-react';
 
 interface LayoutProps {
   children: React.ReactNode;
+  language: 'en' | 'so';
+  setLanguage: (lang: 'en' | 'so') => void;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children, language, setLanguage }: LayoutProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [language, setLanguage] = useState<'en' | 'so'>('en');
   const location = useLocation();
 
   const navigation = [

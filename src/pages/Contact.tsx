@@ -1,9 +1,11 @@
-
 import { useState } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 
-const Contact = () => {
-  const [language] = useState<'en' | 'so'>('en');
+interface ContactProps {
+  language: 'en' | 'so';
+}
+
+const Contact = ({ language }: ContactProps) => {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',

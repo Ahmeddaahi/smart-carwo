@@ -12,31 +12,35 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Admin from "./pages/Admin";
 import Login from "./pages/Login";
+import { useState } from "react";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/products" element={<Products />} />
-            <Route path="/product/:productId" element={<ProductDetail />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/login" element={<Login />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [language, setLanguage] = useState<'en' | 'so'>('so');
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Layout language={language} setLanguage={setLanguage}>
+            <Routes>
+              <Route path="/" element={<Home language={language} />} />
+              <Route path="/about" element={<About language={language} />} />
+              <Route path="/products" element={<Products language={language} />} />
+              <Route path="/product/:productId" element={<ProductDetail language={language} />} />
+              <Route path="/contact" element={<Contact language={language} />} />
+              <Route path="/admin" element={<Admin language={language} />} />
+              <Route path="/admin/login" element={<Login language={language} />} />
+              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+              <Route path="*" element={<NotFound language={language} />} />
+            </Routes>
+          </Layout>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

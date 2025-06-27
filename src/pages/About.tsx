@@ -1,10 +1,10 @@
-
-import { useState } from 'react';
 import { Award, Users, Globe, Heart } from 'lucide-react';
 
-const About = () => {
-  const [language] = useState<'en' | 'so'>('en');
+interface AboutProps {
+  language: 'en' | 'so';
+}
 
+const About = ({ language }: AboutProps) => {
   const values = [
     {
       icon: <Award className="h-8 w-8 text-carwo-gold" />,

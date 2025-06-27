@@ -2,7 +2,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../integrations/supabase/client';
 
-const Login = () => {
+interface LoginProps {
+  language: 'en' | 'so';
+}
+
+const Login = (_props: LoginProps) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

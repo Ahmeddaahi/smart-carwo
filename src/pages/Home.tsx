@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Users, ShoppingBag, Award, Truck } from 'lucide-react';
 import { supabase } from '../integrations/supabase/client';
 import type { Database } from '../integrations/supabase/types';
 
-const Home = () => {
-  const [language] = useState<'en' | 'so'>('en');
+interface HomeProps {
+  language: 'en' | 'so';
+}
+
+const Home = ({ language }: HomeProps) => {
   const [customerCount, setCustomerCount] = useState(0);
   const [isCounterVisible, setIsCounterVisible] = useState(false);
   const [categories, setCategories] = useState<Database['public']['Tables']['categories']['Row'][]>([]);
@@ -17,7 +20,7 @@ const Home = () => {
       titleEn: "5000+ Happy Customers",
       titleSo: "5000+ Macmiil Faraxsan",
       descEn: "Trusted by thousands across Ethiopia",
-      descSo: "Waxaa nagu kalsoon kumaan Itoobiya"
+      descSo: "Waxaa nagu kalsoon kumaan macmiil"
     },
     {
       icon: <ShoppingBag className="h-8 w-8 text-carwo-gold" />,
@@ -37,8 +40,8 @@ const Home = () => {
       icon: <Truck className="h-8 w-8 text-carwo-gold" />,
       titleEn: "Fast Delivery",
       titleSo: "Dhoofin Degdeg",
-      descEn: "Quick and reliable shipping",
-      descSo: "Dhoofin degdeg ah oo la isku halayn karo"
+      descEn: "comming soon",
+      descSo: "way inoso socta"
     }
   ];
 
@@ -119,7 +122,7 @@ const Home = () => {
           <p className="text-xl md:text-2xl mb-8 text-gray-200 animate-slide-in">
             {language === 'en' 
               ? "Ku soo dhawoow Carwo Smart, halka aad ka heli karto khamiisyo, shaadhadh, surwaalo, cadaro, sacado, jaakado, suits, garamaan iyo macawisyo tayo sare leh"
-              : "Gurigaaga Khamarada Quruxda badan & Dharka Dhaqameedka"}
+              : "Xaruntaada Fashion-ka iyo Quruxda Casriga ah ee Carwo Smart"}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center animate-scale-in">
@@ -161,7 +164,7 @@ const Home = () => {
             <p className="text-gray-400 mt-2">
               {language === 'en' 
                 ? 'Join thousands who trust Carwo Smart for their fashion needs'
-                : 'Ku biir kumaanyaalka ku kalsoon Carwo Smart baahidooda dhar-ga'}
+                : 'Ku biir kumanaanka ku kalsoon Carwo Smart baahidaada dhar-ka'}
             </p>
           </div>
         </div>
@@ -177,7 +180,7 @@ const Home = () => {
             <p className="text-xl text-gray-600">
               {language === 'en' 
                 ? "Discover our premium collection of traditional and modern fashion"
-                : "Baaro ururinta tayada sare ee dharka dhaqameedka iyo casriga ah"}
+                : "Dharka casriga ah ee tayada sare leh oo ku habboon qof walba – casri u labiso!"}
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -216,12 +219,12 @@ const Home = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
-              <span className="text-gradient">{language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kaa Duwanaysaa?'}</span>
+              <span className="text-gradient">{language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kuu Qabanaysaa?'}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               {language === 'en' 
                 ? "Experience the perfect blend of traditional elegance and modern style"
-                : "La kulmo isku dhafka quruxda dhaqameedka iyo qaabka casriga ah"}
+                : "Isku dhafka dhaqanka iyo casriga – Qurux aan waqti laheyn."}
             </p>
           </div>
           
@@ -252,7 +255,7 @@ const Home = () => {
           <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
             {language === 'en' 
               ? "Browse our exclusive collection and find the perfect outfit for every occasion"
-              : "Baaro ururinta gaar ah ee nala leh oo hel dharka ku habboon xaflad kasta"}
+              : "Baaro ururinta gaarkah oo hel dharka ku habboon wakhti kasta"}
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

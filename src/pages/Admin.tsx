@@ -7,7 +7,11 @@ import type { TablesInsert } from '../integrations/supabase/types';
 type Category = Database['public']['Tables']['categories']['Row'];
 type Product = Database['public']['Tables']['products']['Row'];
 
-const Admin = () => {
+interface AdminProps {
+  language: 'en' | 'so';
+}
+
+const Admin = (_props: AdminProps) => {
   const navigate = useNavigate();
   const [categories, setCategories] = useState<Category[]>([]);
   const [products, setProducts] = useState<Product[]>([]);

@@ -12,8 +12,11 @@ import { Database } from '../integrations/supabase/types';
 type Category = Database['public']['Tables']['categories']['Row'];
 type Product = Database['public']['Tables']['products']['Row'];
 
-const Products = () => {
-  const [language] = useState<'en' | 'so'>('en');
+interface ProductsProps {
+  language: 'en' | 'so';
+}
+
+const Products = ({ language }: ProductsProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');

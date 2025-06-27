@@ -4,9 +4,12 @@ import { ArrowLeft, Heart, Share2, ShoppingCart } from 'lucide-react';
 import { supabase } from '../integrations/supabase/client';
 import type { Database } from '../integrations/supabase/types';
 
-const ProductDetail = () => {
+interface ProductDetailProps {
+  language: 'en' | 'so';
+}
+
+const ProductDetail = ({ language }: ProductDetailProps) => {
   const { productId } = useParams();
-  const [language] = useState<'en' | 'so'>('en');
   const [selectedSize, setSelectedSize] = useState('M');
   const [quantity, setQuantity] = useState(1);
   const [isFavorite, setIsFavorite] = useState(false);
