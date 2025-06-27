@@ -47,8 +47,8 @@ const Contact = ({ language }: ContactProps) => {
       icon: <Phone className="h-6 w-6 text-carwo-gold" />,
       titleEn: "Call Us",
       titleSo: "Noo Soo Wac",
-      detailEn: "+251995817222",
-      detailSo: "+251995817222",
+      detailEn: "+251 93 537 6020",
+      detailSo: "+251 93 537 6020",
       subDetailEn: "Available for WhatsApp",
       subDetailSo: "Loo heli karaa WhatsApp"
     },
@@ -221,7 +221,7 @@ const Contact = ({ language }: ContactProps) => {
                   </a>
                   
                   <a
-                    href="tel:+251995817222"
+                    href="tel:+251935376020"
                     className="flex items-center justify-center space-x-3 px-6 py-3 bg-carwo-gold text-carwo-black rounded-lg hover:bg-yellow-400 transition-colors duration-300"
                   >
                     <Phone className="h-5 w-5" />

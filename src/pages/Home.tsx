@@ -268,7 +268,7 @@ const Home = ({ language }: HomeProps) => {
             </Link>
             
             <a 
-              href="https://wa.me/251995817222"
+              href="https://wa.me/251935376020"
               target="_blank"
               rel="noopener noreferrer"
               className="px-6 py-3 border-2 border-carwo-gold text-carwo-gold hover:bg-carwo-gold hover:text-carwo-black font-semibold rounded-lg transition-all duration-300"

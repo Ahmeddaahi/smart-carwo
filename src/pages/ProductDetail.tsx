@@ -48,7 +48,7 @@ const ProductDetail = ({ language }: ProductDetailProps) => {
     if (!product) return;
     const message = `Hello! I'm interested in ordering:\n\nProduct: ${product.nameen}\nSize: ${selectedSize}\nQuantity: ${quantity}\nTotal: ${(product.price * quantity).toLocaleString()} ETB\n\nPlease confirm availability and delivery details.`;
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/251995817222?text=${encodedMessage}`, '_blank');
+    window.open(`https://wa.me/251935376020?text=${encodedMessage}`, '_blank');
   };
 
   if (loading) {

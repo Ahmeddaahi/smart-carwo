@@ -113,7 +113,7 @@ const Layout = ({ children, language, setLanguage }: LayoutProps) => {
 
       {/* WhatsApp Float Button */}
       <a
-        href="https://wa.me/251995817222"
+        href="https://wa.me/251935376020"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 z-50"
@@ -164,7 +164,7 @@ const Layout = ({ children, language, setLanguage }: LayoutProps) => {
               </h3>
               <div className="space-y-2 text-gray-400">
                 <p>Jigjiga</p>
-                <p>+251995817222</p>
+                <p>+251 93 537 6020</p>
                 <p>carwosmart@gmail.com</p>
               </div>
             </div>
