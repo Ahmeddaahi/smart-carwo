@@ -105,7 +105,7 @@ const Home = ({ language }: HomeProps) => {
         <div 
           className="absolute inset-0 opacity-30"
           style={{
-            backgroundImage: 'url(/lovable-uploads/66e8a64f-d720-44ec-82a2-aee7ae5b8efe.png)',
+            backgroundImage: 'url(/lovable-uploads/9bd21ea8-6aa3-470b-a735-10707377791a.png)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat'
