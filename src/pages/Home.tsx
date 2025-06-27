@@ -19,7 +19,7 @@ const Home = ({ language }: HomeProps) => {
       icon: <Users className="h-8 w-8 text-carwo-gold" />,
       titleEn: "5000+ Happy Customers",
       titleSo: "5000+ Macmiil Faraxsan",
-      descEn: "Trusted by thousands across Ethiopia",
+      descEn: "Trusted by thousands",
       descSo: "Waxaa nagu kalsoon kumaan macmiil"
     },
     {

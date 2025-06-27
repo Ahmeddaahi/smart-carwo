@@ -163,7 +163,7 @@ const Layout = ({ children, language, setLanguage }: LayoutProps) => {
                 {language === 'en' ? 'Contact Info' : 'Macluumaadka Xiriirka'}
               </h3>
               <div className="space-y-2 text-gray-400">
-                <p>Jigjiga, Ethiopia</p>
+                <p>Jigjiga</p>
                 <p>+251995817222</p>
                 <p>carwosmart@gmail.com</p>
               </div>

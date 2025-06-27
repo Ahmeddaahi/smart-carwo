@@ -66,8 +66,8 @@ const About = ({ language }: AboutProps) => {
               {language === 'en' ? (
                 <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
                   <p>
-                    Founded in the heart of Jigjiga, Ethiopia, Carwo Smart began as a vision to bridge 
-                    the gap between traditional Somali and Ethiopian fashion and contemporary style. 
+                    Founded in the heart of Jigjiga, Carwo Smart began as a vision to bridge 
+                    the gap between traditional Somali fashion and contemporary style. 
                     Our journey started with a deep appreciation for the rich cultural heritage of our region.
                   </p>
                   <p>
@@ -76,7 +76,7 @@ const About = ({ language }: AboutProps) => {
                     curated to reflect the elegance and dignity that traditional garments represent.
                   </p>
                   <p>
-                    Today, we proudly serve over 5,000 customers across Ethiopia and beyond, 
+                    Today, we proudly serve over 5,000 customers and beyond, 
                     each seeking authentic, high-quality traditional and modern fashion that 
                     honors their heritage while embracing contemporary style.
                   </p>
@@ -84,8 +84,8 @@ const About = ({ language }: AboutProps) => {
               ) : (
                 <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
                   <p>
-                    Waxaa la aasaasay wadnaha Jigjiga, Itoobiya, Carwo Smart waxay bilowday aragti ah 
-                    oo ka kooban buuxinta farqiga u dhexeeya dharka dhaqameedka Soomaalida iyo Itoobiya 
+                    Waxaa la aasaasay wadnaha Jigjiga, Carwo Smart waxay bilowday aragti ah 
+                    oo ka kooban buuxinta farqiga u dhexeeya dharka dhaqameedka Soomaalida 
                     iyo qaabka casriga ah. Socdaalkaygii wuxuu ku bilaabmay qadarin qoto dheer oo ku saabsan 
                     dhaxalka dhaqanka ee qani ah ee gobolkaaga.
                   </p>
@@ -97,7 +97,7 @@ const About = ({ language }: AboutProps) => {
                   </p>
                   <p>
                     Maanta, waxaan si faakhir leh ugu adeegnaa in ka badan 5,000 macmiil ah oo ku nool 
-                    Itoobiya iyo meelo ka baxsan, mid kastaa oo raadinaya dhab ah, tayo sare leh dhaqameed 
+                    meelo ka baxsan, mid kastaa oo raadinaya dhab ah, tayo sare leh dhaqameed 
                     iyo moodada casriga ah oo xurmeynaya dhaxalkooda iyagoo soo dhaweynaya qaabka casriga ah.
                   </p>
                 </div>
@@ -163,8 +163,8 @@ const About = ({ language }: AboutProps) => {
               </h2>
               <p className="text-xl text-gray-300 leading-relaxed">
                 {language === 'en' 
-                  ? "To preserve and celebrate the rich cultural heritage of Somali and Ethiopian fashion while providing modern, elegant, and high-quality clothing that empowers individuals to express their identity with pride and confidence."
-                  : "In aan ilaalino oo aan dabaaldegno dhaxalka dhaqanka qani ah ee moodada Soomaalida iyo Itoobiya iyagoo bixinaya dhar casri ah, qurux badan, iyo tayo sare oo u sahla shakhsiyaadka inay u muujiyaan aqoonsigooda faanka iyo kalsoonida."}
+                  ? "To preserve and celebrate the rich cultural heritage of Somali fashion while providing modern, elegant, and high-quality clothing that empowers individuals to express their identity with pride and confidence."
+                  : "In aan ilaalino oo aan dabaaldegno dhaxalka dhaqanka qani ah ee moodada Soomaalida iyagoo bixinaya dhar casri ah, qurux badan, iyo tayo sare oo u sahla shakhsiyaadka inay u muujiyaan aqoonsigooda faanka iyo kalsoonida."}
               </p>
             </div>
             
@@ -207,7 +207,7 @@ const About = ({ language }: AboutProps) => {
                     <div className="w-2 h-2 bg-carwo-gold rounded-full mt-3"></div>
                     <div>
                       <strong>{language === 'en' ? 'Location:' : 'Goobta:'}</strong>
-                      <br />Jigjiga, Ethiopia
+                      <br />Jigjiga
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
