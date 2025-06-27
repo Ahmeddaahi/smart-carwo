@@ -13,8 +13,8 @@ const Layout = ({ children, language, setLanguage }: LayoutProps) => {
   const location = useLocation();
 
   const navigation = [
-    { name: 'Home', nameEn: 'Home', nameSo: 'Guriga', href: '/' },
-    { name: 'About Us', nameEn: 'About Us', nameSo: 'Waa Maxay', href: '/about' },
+    { name: 'Home', nameEn: 'Home', nameSo: 'Bogga hore', href: '/' },
+    { name: 'About Us', nameEn: 'About Us', nameSo: 'Nagu sabsan', href: '/about' },
     { name: 'Products', nameEn: 'Products', nameSo: 'Alaabta', href: '/products' },
     { name: 'Contact Us', nameEn: 'Contact Us', nameSo: 'Nala Soo Xiriir', href: '/contact' },
   ];

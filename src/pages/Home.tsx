@@ -121,7 +121,7 @@ const Home = ({ language }: HomeProps) => {
           
           <p className="text-xl md:text-2xl mb-8 text-gray-200 animate-slide-in">
             {language === 'en' 
-              ? "Ku soo dhawoow Carwo Smart, halka aad ka heli karto khamiisyo, shaadhadh, surwaalo, cadaro, sacado, jaakado, suits, garamaan iyo macawisyo tayo sare leh"
+              ? "Your Center for Modern Fashion and Elegance – Carwo Smart"
               : "Xaruntaada Fashion-ka iyo Quruxda Casriga ah ee Carwo Smart"}
           </p>
           
