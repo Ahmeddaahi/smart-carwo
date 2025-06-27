@@ -152,8 +152,8 @@ const Home = () => {
       <section className="py-16 bg-carwo-black text-white">
         <div className="container mx-auto px-4 text-center">
           <div id="customer-counter" className="animate-fade-in">
-            <h2 className="text-5xl md:text-7xl font-bold text-gradient mb-4 font-montserrat">
-              {customerCount.toLocaleString()}+
+            <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
+              <span className="text-gradient">{customerCount.toLocaleString()}+</span>
             </h2>
             <p className="text-2xl md:text-3xl">
               {language === 'en' ? 'Happy Customers' : 'Macmiil Faraxsan'}
@@ -171,8 +171,8 @@ const Home = () => {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-carwo-black mb-4 font-montserrat">
-              {language === 'en' ? 'Featured Categories' : 'Noocyada Caanka ah'}
+            <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
+              <span className="text-gradient">{language === 'en' ? 'Featured Categories' : 'Noocyada Caanka ah'}</span>
             </h2>
             <p className="text-xl text-gray-600">
               {language === 'en' 
@@ -215,8 +215,8 @@ const Home = () => {
       <section className="py-20 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-carwo-black mb-4 font-montserrat">
-              {language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kaa Duwanaysaa?'}
+            <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
+              <span className="text-gradient">{language === 'en' ? 'Why Choose Carwo Smart?' : 'Maxay Carwo Smart Kaa Duwanaysaa?'}</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               {language === 'en' 
@@ -246,8 +246,8 @@ const Home = () => {
       {/* Call to Action */}
       <section className="py-20 bg-dark-gradient text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 font-montserrat">
-            {language === 'en' ? 'Ready to Elevate Your Style?' : 'Diyaar u tahay in aad kor u qaaddid qaabakaaga?'}
+          <h2 className="text-5xl md:text-7xl font-bold font-montserrat mb-6 animate-fade-in">
+            <span className="text-gradient">{language === 'en' ? 'Ready to Elevate Your Style?' : 'Diyaar u tahay in aad kor u qaaddid qaabakaaga?'}</span>
           </h2>
           <p className="text-xl mb-8 text-gray-300 max-w-2xl mx-auto">
             {language === 'en' 

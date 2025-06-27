@@ -54,7 +54,14 @@ const Products = () => {
   });
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-20 relative">
+      <Link
+        to="/admin/login"
+        className="carwo-btn text-base px-4 py-2 absolute right-8 top-8 z-20"
+        style={{ whiteSpace: 'nowrap' }}
+      >
+        {language === 'en' ? 'Edit Products' : 'Tafatir Alaabta'}
+      </Link>
       {/* Header */}
       <section className="py-16 bg-dark-gradient text-white">
         <div className="container mx-auto px-4 text-center">
