@@ -214,7 +214,7 @@ const About = ({ language }: AboutProps) => {
                     <div className="w-2 h-2 bg-carwo-gold rounded-full mt-3"></div>
                     <div>
                       <strong>{language === 'en' ? 'Phone:' : 'Telefon:'}</strong>
-                      <br />+251995817222
+                      <br />+251 93 537 6020
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
