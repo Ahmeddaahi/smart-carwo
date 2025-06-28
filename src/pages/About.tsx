@@ -111,7 +111,7 @@ const About = ({ language }: AboutProps) => {
                 className="rounded-2xl shadow-2xl"
               />
               <div className="absolute -bottom-6 -right-6 bg-carwo-gold text-carwo-black p-6 rounded-xl shadow-lg">
-                <div className="text-3xl font-bold">2019</div>
+                <div className="text-3xl font-bold">2008</div>
                 <div className="text-sm font-medium">
                   {language === 'en' ? 'Founded' : 'La Aasaasay'}
                 </div>

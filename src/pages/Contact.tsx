@@ -239,7 +239,7 @@ const Contact = ({ language }: ContactProps) => {
               
               <div className="bg-gray-200 rounded-2xl overflow-hidden shadow-lg h-96 mb-8">
                 <iframe
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126191.64674374835!2d42.79472687421872!3d9.351967694482456!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1631bf2b2f97d295%3A0x3a652d5b1a0b8e8a!2sJijiga!5e0!3m2!1sen!2sus!4v1647958233123!5m2!1sen!2sus"
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d208.5674730514274!2d42.7996329474864!3d9.348201366170342!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x162e374e6d397ed9%3A0xcf7320341d17a83c!2sCarwo%20smart!5e1!3m2!1sen!2set!4v1751095059805!5m2!1sen!2set"
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
